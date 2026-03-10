@@ -41,6 +41,8 @@ C:/Program Files/dotnet/shared/Microsoft.NETCore.App/<version>/
 C:/Program Files/dotnet/shared/Microsoft.AspNetCore.App/<version>/
 /usr/share/dotnet/shared/Microsoft.NETCore.App/<version>/
 /usr/share/dotnet/shared/Microsoft.AspNetCore.App/<version>/
+/usr/local/share/dotnet/shared/Microsoft.NETCore.App/<version>/
+/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App/<version>/
 ```
 
 Examples:
@@ -57,7 +59,7 @@ Reference packs are useful for API shape, not runtime implementation.
 Typical location:
 
 ```text
-C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Ref/<version>/ref/net8.0/
+C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Ref/<version>/ref/<tfm>/
 ```
 
 If the user asks how something works internally, move from the reference pack to the matching shared runtime assembly.

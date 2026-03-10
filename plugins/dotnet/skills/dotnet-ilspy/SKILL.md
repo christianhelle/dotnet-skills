@@ -122,7 +122,7 @@ Use IL when investigating:
 - `unsafe`, `ref struct`, or span-heavy code
 - Differences between what the author wrote and what the compiler emitted
 
-### Step 5a: Use concrete command patterns for common investigations
+### Step 6: Use concrete command patterns for common investigations
 
 Framework implementation:
 
@@ -148,7 +148,7 @@ dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 
 Replace `path/to/...` with the actual assembly path that matches the user's package version, runtime version, and target framework.
 
-### Step 6: Follow the implementation, not just the public entry point
+### Step 7: Follow the implementation, not just the public entry point
 
 Many framework and package APIs are thin wrappers. If the first method you inspect only delegates elsewhere:
 
@@ -158,7 +158,7 @@ Many framework and package APIs are thin wrappers. If the first method you inspe
 
 When the user asks about framework behavior, mention the exact runtime version you inspected because implementations can differ between releases.
 
-### Step 7: Report findings with provenance and caveats
+### Step 8: Report findings with provenance and caveats
 
 When answering the user:
 
