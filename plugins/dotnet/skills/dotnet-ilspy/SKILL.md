@@ -2,17 +2,20 @@
 name: dotnet-ilspy
 description: >
   Inspect managed .NET assemblies with ILSpy and ilspycmd to understand how APIs work internally.
-  Use when the user wants to inspect framework implementation details, reverse engineer a NuGet
-  package, compare decompiled C# with IL, or understand behavior in a compiled .NET binary
-  without source. DO NOT USE FOR: native binaries, crash dump or profiler analysis, or cases
-  where the original source repository or Source Link already provides the needed answer.
+  USE FOR: inspecting framework implementation details, reverse engineering NuGet package
+  binaries, comparing decompiled C# with IL, and understanding behavior in compiled managed
+  .NET assemblies when source is unavailable or may not match the shipped binary.
+  DO NOT USE FOR: native binaries, dump or profiler analysis, NativeAOT outputs, or cases
+  where Source Link or the original source repository already provides the needed answer.
 ---
 
 # .NET Assembly Decompilation with ILSpy
 
+## Purpose
+
 Use this skill to answer "how does this .NET code actually work?" by decompiling the shipped assembly instead of guessing from public API docs. Prefer the smallest relevant binary and the narrowest decompilation scope that answers the user's question.
 
-## When to Use This Skill
+## When to Use
 
 - The user wants to understand the internal implementation of a .NET API or type
 - The user needs to inspect a NuGet package without cloning its source repository
@@ -42,7 +45,7 @@ Use this skill to answer "how does this .NET code actually work?" by decompiling
 
 Start by identifying where the implementation actually lives.
 
-- For NuGet packages, prefer `lib/<tfm>/` or `runtimes/<rid>/lib/<tfm>/`
+- For NuGet packages, prefer `lib/<tfm>/` or `runtimes/<rid>/lib/<tfm>/`; `tfm` means target framework moniker such as `net8.0`, and `rid` means runtime identifier such as `win-x64`
 - Do not start with `ref/<tfm>/` when the user wants implementation details; reference assemblies usually omit method bodies
 - For shared framework code, run `dotnet --list-runtimes` and inspect the matching directory under `shared/Microsoft.NETCore.App/` or `shared/Microsoft.AspNetCore.App/`
 - For app code, inspect `bin/Debug/<tfm>/`, `bin/Release/<tfm>/`, or published output
@@ -123,25 +126,27 @@ Use IL when investigating:
 
 Framework implementation:
 
-```pwsh
+```text
 dotnet --list-runtimes
-dnx ilspycmd -l class "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.2/System.Text.Json.dll"
-dnx ilspycmd -t System.Text.Json.JsonSerializer "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.2/System.Text.Json.dll"
+dnx ilspycmd -l class "path/to/System.Text.Json.dll"
+dnx ilspycmd -t System.Text.Json.JsonSerializer "path/to/System.Text.Json.dll"
 ```
 
 NuGet package source inspection:
 
-```pwsh
-dnx ilspycmd -t Polly.Retry.RetryPolicy "~/.nuget/packages/polly/10.0.2/lib/net8.0/Polly.dll"
-dnx ilspycmd -p -o ./polly-src "~/.nuget/packages/polly/10.0.2/lib/net8.0/Polly.dll"
+```text
+dnx ilspycmd -t Polly.Retry.RetryHelper "path/to/Polly.Core.dll"
+dnx ilspycmd -p -o ./polly-core-src "path/to/Polly.Core.dll"
 ```
 
 Compare reconstructed C# with IL for the same type:
 
-```pwsh
+```text
 dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
 dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```
+
+Replace `path/to/...` with the actual assembly path that matches the user's package version, runtime version, and target framework.
 
 ### Step 6: Follow the implementation, not just the public entry point
 

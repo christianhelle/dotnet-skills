@@ -2,6 +2,8 @@
 
 Use this reference when the user knows the package, framework, or app name but not the exact assembly path to decompile.
 
+In the paths below, `tfm` means target framework moniker such as `net8.0`, and `rid` means runtime identifier such as `win-x64`.
+
 ## NuGet packages
 
 Restore packages first if needed, then inspect the package cache.
@@ -12,6 +14,7 @@ Typical locations:
 ~/.nuget/packages/<package-name>/<version>/lib/<tfm>/
 ~/.nuget/packages/<package-name>/<version>/runtimes/<rid>/lib/<tfm>/
 ~/.nuget/packages/<package-name>/<version>/ref/<tfm>/
+C:/Users/<user>/.nuget/packages/<package-name>/<version>/lib/<tfm>/
 ```
 
 Guidance:
@@ -19,6 +22,7 @@ Guidance:
 - Prefer `lib/` for package implementation
 - Prefer `runtimes/<rid>/lib/` when the package ships runtime-specific binaries
 - Use `ref/` only to inspect public API shape; it is usually the wrong place for implementation details
+- Match both the package version and target framework to the user's actual app before drawing conclusions
 
 Example:
 
@@ -74,7 +78,7 @@ Prefer the publish output when trimming, single-file publishing, or packaging ch
 
 ## Quick command patterns
 
-```pwsh
+```text
 dotnet --list-runtimes
 dnx ilspycmd -l class "path/to/Assembly.dll"
 dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"

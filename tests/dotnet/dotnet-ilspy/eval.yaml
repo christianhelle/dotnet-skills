@@ -50,7 +50,7 @@ scenarios:
       - type: "output_matches"
         pattern: "(state.?machine|async)"
       - type: "output_matches"
-        pattern: "(decompiled|reconstructed)"
+        pattern: "(decompiled|reconstruct)"
     rubric:
       - "Uses normal decompilation first and then switches to IL output or IL view for exact lowering details"
       - "Explains that IL is useful for async state machines or other compiler-generated behavior"
