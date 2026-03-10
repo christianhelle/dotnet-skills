@@ -20,6 +20,9 @@
 /plugins/dotnet/skills/nuget-trusted-publishing/ @lewing @kartheekp-ms
 /tests/dotnet/nuget-trusted-publishing/ @lewing @kartheekp-ms
 
+/plugins/dotnet/skills/dotnet-ilspy/ @timheuer @dbreshears
+/tests/dotnet/dotnet-ilspy/ @timheuer @dbreshears
+
 # dotnet-upgrade (migrating and upgrading .NET projects)
 /plugins/dotnet-upgrade/skills/thread-abort-migration/ @dotnet/appmodel
 /tests/dotnet-upgrade/thread-abort-migration/ @dotnet/appmodel
