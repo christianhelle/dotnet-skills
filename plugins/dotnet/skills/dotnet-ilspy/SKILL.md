@@ -53,19 +53,19 @@ If the user only knows the package or framework name, use [references/common-ass
 
 Prefer a reproducible CLI flow over the GUI when answering from a terminal session.
 
-```bash
+```pwsh
 dnx ilspycmd -h
 ```
 
 If `dnx` is unavailable or the environment already has ILSpy installed as a tool, use:
 
-```bash
+```pwsh
 ilspycmd -h
 ```
 
 If neither command works and installing a tool is acceptable in the current environment, install the CLI tool:
 
-```bash
+```pwsh
 dotnet tool install --global ilspycmd
 ```
 
@@ -75,7 +75,7 @@ If installation is not appropriate, stop and tell the user what is missing inste
 
 List types first so you can target the correct namespace and avoid noisy output.
 
-```bash
+```pwsh
 dnx ilspycmd -l class "path/to/Assembly.dll"
 dnx ilspycmd -l interface "path/to/Assembly.dll"
 ```
@@ -90,13 +90,13 @@ Use the narrowest list that fits the question. If the expected type is missing, 
 
 For a focused answer, start with a single type:
 
-```bash
+```pwsh
 dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
 For broader exploration:
 
-```bash
+```pwsh
 dnx ilspycmd -o ./decompiled "path/to/Assembly.dll"
 dnx ilspycmd -p -o ./decompiled-project "path/to/Assembly.dll"
 ```
@@ -107,7 +107,7 @@ Use `-p` only when the user needs to browse multiple files or understand relatio
 
 Decompiled C# is often good enough for control flow, but IL is better when you need exact lowering details.
 
-```bash
+```pwsh
 dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
@@ -123,7 +123,7 @@ Use IL when investigating:
 
 Framework implementation:
 
-```bash
+```pwsh
 dotnet --list-runtimes
 dnx ilspycmd -l class "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.2/System.Text.Json.dll"
 dnx ilspycmd -t System.Text.Json.JsonSerializer "C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.2/System.Text.Json.dll"
@@ -131,14 +131,14 @@ dnx ilspycmd -t System.Text.Json.JsonSerializer "C:/Program Files/dotnet/shared/
 
 NuGet package source inspection:
 
-```bash
+```pwsh
 dnx ilspycmd -t Polly.Retry.RetryPolicy "~/.nuget/packages/polly/10.0.2/lib/net8.0/Polly.dll"
 dnx ilspycmd -p -o ./polly-src "~/.nuget/packages/polly/10.0.2/lib/net8.0/Polly.dll"
 ```
 
 Compare reconstructed C# with IL for the same type:
 
-```bash
+```pwsh
 dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
 dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```

@@ -42,8 +42,8 @@ C:/Program Files/dotnet/shared/Microsoft.AspNetCore.App/<version>/
 Examples:
 
 ```text
-C:/Program Files/dotnet/shared/Microsoft.NETCore.App/8.0.0/System.Text.Json.dll
-C:/Program Files/dotnet/shared/Microsoft.AspNetCore.App/8.0.0/Microsoft.AspNetCore.Server.Kestrel.Core.dll
+C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.2/System.Text.Json.dll
+C:/Program Files/dotnet/shared/Microsoft.AspNetCore.App/10.0.2/Microsoft.AspNetCore.Server.Kestrel.Core.dll
 ```
 
 ## SDK reference packs
@@ -74,7 +74,7 @@ Prefer the publish output when trimming, single-file publishing, or packaging ch
 
 ## Quick command patterns
 
-```bash
+```pwsh
 dotnet --list-runtimes
 dnx ilspycmd -l class "path/to/Assembly.dll"
 dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
