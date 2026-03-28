@@ -82,9 +82,9 @@ Prefer the publish output when trimming, single-file publishing, or packaging ch
 
 ```text
 dotnet --list-runtimes
-dnx ilspycmd -l class "path/to/Assembly.dll"
-dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
-dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -l class "path/to/Assembly.dll"
+ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
-If `dnx ilspycmd` is unavailable, substitute `ilspycmd`.
+If `ilspycmd` is not installed, use `dnx ilspycmd@<version>` with a pinned version, or install it via `dotnet tool install --global ilspycmd`.

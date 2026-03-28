@@ -37,7 +37,7 @@ Use this skill to answer "how does this .NET code actually work?" by decompiling
 | Assembly path, package name, or framework component | Yes         | The binary to inspect, or enough information to locate it                      |
 | Type, member, or behavior to investigate            | Yes         | The exact API, class, method, or question the user wants explained             |
 | Target framework or package version                 | Recommended | Needed to choose the correct `lib/`, `runtimes/`, or shared framework assembly |
-| ILSpy CLI availability                              | Recommended | Whether `dnx ilspycmd` or `ilspycmd` is already available on the machine       |
+| ILSpy CLI availability                              | Recommended | Whether `ilspycmd` is already available on the machine                         |
 
 ## Workflow
 
@@ -56,14 +56,16 @@ If the user only knows the package or framework name, use [references/common-ass
 
 Prefer a reproducible CLI flow over the GUI when answering from a terminal session.
 
-```pwsh
-dnx ilspycmd -h
-```
-
-If `dnx` is unavailable or the environment already has ILSpy installed as a tool, use:
+Check for an already-installed `ilspycmd` first:
 
 ```pwsh
 ilspycmd -h
+```
+
+If `ilspycmd` is not installed but `dnx` (.NET 10+) is available, run it as a NuGet package with a pinned version:
+
+```pwsh
+dnx ilspycmd@9.0.0.7985-preview2 -h
 ```
 
 If neither command works and installing a tool is acceptable in the current environment, install the CLI tool:
@@ -79,8 +81,8 @@ If installation is not appropriate, stop and tell the user what is missing inste
 List types first so you can target the correct namespace and avoid noisy output.
 
 ```pwsh
-dnx ilspycmd -l class "path/to/Assembly.dll"
-dnx ilspycmd -l interface "path/to/Assembly.dll"
+ilspycmd -l class "path/to/Assembly.dll"
+ilspycmd -l interface "path/to/Assembly.dll"
 ```
 
 Use the narrowest list that fits the question. If the expected type is missing, check whether:
@@ -94,14 +96,14 @@ Use the narrowest list that fits the question. If the expected type is missing, 
 For a focused answer, start with a single type:
 
 ```pwsh
-dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
 For broader exploration:
 
 ```pwsh
-dnx ilspycmd -o ./decompiled "path/to/Assembly.dll"
-dnx ilspycmd -p -o ./decompiled-project "path/to/Assembly.dll"
+ilspycmd -o ./decompiled "path/to/Assembly.dll"
+ilspycmd -p -o ./decompiled-project "path/to/Assembly.dll"
 ```
 
 Use `-p` only when the user needs to browse multiple files or understand relationships across many types.
@@ -111,7 +113,7 @@ Use `-p` only when the user needs to browse multiple files or understand relatio
 Decompiled C# is often good enough for control flow, but IL is better when you need exact lowering details.
 
 ```pwsh
-dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
 Use IL when investigating:
@@ -128,22 +130,22 @@ Framework implementation:
 
 ```text
 dotnet --list-runtimes
-dnx ilspycmd -l class "path/to/System.Text.Json.dll"
-dnx ilspycmd -t System.Text.Json.JsonSerializer "path/to/System.Text.Json.dll"
+ilspycmd -l class "path/to/System.Text.Json.dll"
+ilspycmd -t System.Text.Json.JsonSerializer "path/to/System.Text.Json.dll"
 ```
 
 NuGet package source inspection:
 
 ```text
-dnx ilspycmd -t Polly.Retry.RetryHelper "path/to/Polly.Core.dll"
-dnx ilspycmd -p -o ./polly-core-src "path/to/Polly.Core.dll"
+ilspycmd -t Polly.Retry.RetryHelper "path/to/Polly.Core.dll"
+ilspycmd -p -o ./polly-core-src "path/to/Polly.Core.dll"
 ```
 
 Compare reconstructed C# with IL for the same type:
 
 ```text
-dnx ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
-dnx ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -t Namespace.TypeName "path/to/Assembly.dll"
+ilspycmd -il -t Namespace.TypeName "path/to/Assembly.dll"
 ```
 
 Replace `path/to/...` with the actual assembly path that matches the user's package version, runtime version, and target framework.
@@ -193,4 +195,4 @@ If the result is still ambiguous and Source Link or the upstream repository is a
 ## References
 
 - [ILSpy repository](https://github.com/icsharpcode/ILSpy)
-- `dnx ilspycmd -h` or `ilspycmd -h` for the local CLI help text
+- `ilspycmd -h` for the local CLI help text
