@@ -1,9 +1,8 @@
 scenarios:
   - name: "Inspect framework implementation with ILSpy"
     prompt: |
-      I want to understand how `System.Text.Json.JsonSerializer` works internally in the .NET runtime.
-      I do not need public API usage guidance; I want to inspect the implementation with ILSpy.
-      How should I do that?
+      How does `System.Text.Json.JsonSerializer.Serialize` actually work under the hood in the .NET runtime?
+      I want to see the real implementation, not just the public API docs.
     assertions:
       - type: "output_matches"
         pattern: "(dnx\\s+)?ilspycmd"
@@ -21,8 +20,8 @@ scenarios:
 
   - name: "Inspect a NuGet package implementation"
     prompt: |
-      I want to inspect Polly's retry logic from my local NuGet cache with ILSpy instead of cloning the repository.
-      What should I look for and what commands should I run?
+      I want to understand how Polly implements its retry logic without cloning the source repository.
+      I already have the package restored locally. How can I look at the actual compiled code?
     assertions:
       - type: "output_contains"
         value: ".nuget/packages"
@@ -40,8 +39,8 @@ scenarios:
 
   - name: "Compare decompiled C# with IL"
     prompt: |
-      I have a compiled .NET assembly and I want to understand what the compiler emitted for an async method.
-      Show me how to inspect both the reconstructed C# and the IL with ILSpy.
+      I have a compiled .NET assembly with an async method that behaves unexpectedly.
+      I want to see exactly what the compiler generated, both as readable C# and as raw IL.
     assertions:
       - type: "output_matches"
         pattern: "(dnx\\s+)?ilspycmd"
