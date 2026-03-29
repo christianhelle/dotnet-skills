@@ -21,9 +21,6 @@ Plugging into your CI, it ensures every new skill adds real value, and existing 
 
 - Authenticated with GitHub via `gh auth login` (the GitHub Copilot SDK picks up your credentials automatically)
 
-> [!WARNING]
-> Running skill-validator locally can consume excessive premium requests (GitHub Copilot API quota). By default, `--model` is `claude-opus-4.6`, which can consume significantly more premium requests than smaller models. Each scenario triggers multiple model calls (baseline + skill-enhanced run + LLM judge), multiplied by `--runs` (default: 5). For cost control, use `--runs 1` for local iteration and run full validations in CI.
-
 ### Download from pipeline artifacts
 
 A nightly scheduled job publishes AOT-compiled .tar.gz archives and NuGet packages as assets on the [`skill-validator-nightly` GitHub Release](https://github.com/dotnet/skills/releases/tag/skill-validator-nightly).
